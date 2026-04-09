@@ -1,11 +1,19 @@
-<script setup></script>
+<script setup>
+import { RouterView } from 'vue-router';
+
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+   <!-- 一级路由出口组件 -->
+   <RouterView />
+   <div class="test">
+test class
+   </div>
+   
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+.test{
+   color:$priceColor;
+}
+</style>
