@@ -1,20 +1,11 @@
 <script setup>
+
 // 按需引入 Vue Router 的 RouterLink 组件（Vue3 + setup 语法需显式引入）
 import { RouterLink } from 'vue-router'
-import { getCategoryAPI } from '@/apis/layout'
-// 【修改1】新增引入 onMounted 生命周期钩子（用于组件挂载后执行接口请求）
-import { ref, onMounted } from "vue" 
 
-const categoryList = ref([])
-const getCategory = async () => {  //声明了函数
-    const res = await getCategoryAPI()
-    categoryList.value = res.result
-}
-
-// 【修改3】核心：调用异步函数（组件挂载后执行，符合Vue最佳实践）
-onMounted(() => {
-  getCategory() //调用函数
-})
+//使用pinia中的数据
+import { useCategoryStore } from '@/stores/category';
+const categoryStore=useCategoryStore()
 </script>
 
 <template>
@@ -24,8 +15,8 @@ onMounted(() => {
         <RouterLink to="/">小兔鲜</RouterLink>
       </h1>
       <ul class="app-header-nav">
-        <li class="home" v-for="item in categoryList" :key="item.id">
-          <RouterLink to="/">{{ item.name }}</RouterLink>
+        <li class="home" v-for="item in categoryStore.categoryList" :key="item.id">
+          <RouterLink active-class="active" :to="`/category/${item.id}`">{{ item.name }}</RouterLink><!--to前加：然后后面加上``目的是动态识别-->
         </li>
       </ul>
       <div class="search">
