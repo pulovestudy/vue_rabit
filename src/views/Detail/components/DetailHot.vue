@@ -1,14 +1,31 @@
 <script setup>
 //以24小时热榜获取数据渲染模板为例
-import {ref,onMounted} from 'vue'
+import {ref,onMounted,computed} from 'vue'
 import { getHotGoodsAPI } from '@/apis/detail'
 import { useRoute } from 'vue-router'
+
+//设计props参数，在使用该组件的时候传入作为判断条件 适配不同的title和数据（24小时热榜和周热榜的结构是一样的，只是title和内容不一样）
+//因此可以通过设置一个props参数
+const props=defineProps({
+  hotType:{
+    type:Number
+  }
+})
+
+//适配title 
+const TYPEMAP={
+  1:'24小时热榜',
+  2:'周热榜'
+}
+//使用计算属性
+const title=computed(()=>TYPEMAP[props.hotType])
+
 const hotList=ref([])
 const route=useRoute()
 const getHotlist=async()=>{
 const res=await getHotGoodsAPI({
   id:route.params.id,
-  type:1
+  type:props.hotType//适配不同的列表内容
 })
 hotList.value=res.result
 }
@@ -21,7 +38,7 @@ onMounted(()=>getHotlist())
 
 <template>
   <div class="goods-hot">
-    <h3>周日榜单</h3>
+    <h3>{{ title }}</h3>
     <!-- 商品区块 -->
     <RouterLink to="/" class="goods-item" v-for="item in hotList" :key="item.id">
       <img :src="item.picture" alt="" />
