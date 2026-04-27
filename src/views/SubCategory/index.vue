@@ -58,7 +58,7 @@ const load=async()=>{
      <!-- 面包屑 -->
     <div class="bread-container">
      <div class="breadcrumb" style="display: flex; gap: 6px; color: #666;">
-       <router-link to="/" class="breadcrumb-item">首页</router-link>
+       <router-link :to="`/detail/${item.id }`" class="breadcrumb-item">首页</router-link>
        <span>&gt;</span>
        <router-link :to="`/category/${categoryDate.parentID}`" class="breadcrumb-item">
          {{ categoryDate.parentName }}
