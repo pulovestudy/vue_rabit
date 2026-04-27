@@ -2,6 +2,7 @@
 import {getDetail} from '@/apis/detail'
 import { onMounted,ref } from 'vue'
 import { useRoute } from 'vue-router'
+import DetailHot from '@/views/Detail/components/DetailHot.vue'
 
 const goods=ref({})
 const route=useRoute()
@@ -102,19 +103,22 @@ onMounted(()=>getGoods())
                 <div class="goods-detail">
                   <!-- 属性 -->
                   <ul class="attrs">
-                    <li v-for="item in goods.details.properties" :key="item.value">
+                    <li v-for="item in goods.details?.properties" :key="item.value">
                       <span class="dt">{{ item.name }}</span>
                       <span class="dd">{{ item.value }}</span>
                     </li>
                   </ul>
                   <!-- 图片 -->
-                   <img v-for="img in goods.details.pictures" :src="img" :key="img" alt="">
+                   <img v-for="img in goods.details?.pictures" :src="img" :key="img" alt="">
                 </div>
               </div>
             </div>
             <!-- 24热榜+专题推荐 -->
             <div class="goods-aside">
-
+              <!--24小时-->
+            <DetailHot/>
+            <!--周榜-->
+            <DetailHot/>
             </div>
           </div>
         </div>
